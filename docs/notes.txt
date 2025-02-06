@@ -1,0 +1,64 @@
+********************
+*** [A] MOTIVACE ***
+********************
+
+1. TEORIE (strucne)
+    Opticke vlakno je delky 2m (predni strana desky) nebo 3 m (zadni strana desky)
+    opticke body jsou od sebe vzdaleny 0,65 nm
+    Merici rezimy: staticky, cyklicky
+    Kompozitova deska ze skelnych vlaken a
+    Deska obsahuje technologicky prostup kruhoveho tvaru.
+
+2. NAMERENA DATA (vyber)
+   pozn. Namerena data jsou ulozena v datovem formatu TSV (Tab-Separated-Value, Tabulatorem oddelene hodnoty)
+
+   *** Hlavicka souboru ***
+   Test name:	BP_5_down_static_loading
+        -> down/up oznacuje merenou stranu desky
+        -> static/cyclic merici rezim (static: 0 - 10 kN, cyclic: 5x 0 - 1 kN)
+   Measurement Rate Per Channel: 10 Hz  -> merici frekvence (pro 10 Hz znamena zaznam kazdych 0,1 s)
+   Gage Pitch (mm):	0.65   -> Nejvyse dosazitelna merici citlivost, tedy nejmensi vzdalenost mericich bodu v optickem vlakne
+   Length (m):	4.49105    -> celkova delka senzorickeho vlakna
+   x-axis units: m         -> jednoka delky senzorickeho vlakna
+   Units:	microstrain    -> jednotky merene deformace
+
+   *** Data ***
+   Prvni radek namerenych dat obsahuje informaci o poloze jednotlivych mericich bodu v senzorickem vlakne ve vzdalenosti od merici centraly
+   (pro zaznam nize byla zvolena citlivost 2,6 mm)
+   x-axis			0.08	0.0826	0.0852	0.0878	0.0904	0.093	0.0956	0.0982	0.1008
+
+   Nasledujici radky obsahuji:
+   1. sloupec        -> datum mereni
+   2. sloupec        -> cas mereni
+   3. sloupec        -> slovo measurement
+   4. sloupec        -> slovo strain
+   5. sloupec a dale -> namerena hodnota deformace pro dany merici bod v konkretnim case
+   2024-04-23 14:04:18.948671	measurement	strain	0.4     -0.5    -3.7	5.5	    9.9 	1.8	    -3.4	-0.8	1.5
+   2024-04-23 14:04:19.048745	measurement	strain	-5.7	4.3	    6.5	    10.5	9.5	    8.7	    -0.8	-7.7	-2.9
+
+    pozn. vybrany radek obsahuje informaci o mire deformace podel senzorickeho vlakna v jednom konkretnim okamziku mereni
+          vybrany sloupec obsahuje informaci o prubehu deformace v case v jednom konkretnim mericim bode
+
+
+3. PRUBEH MERENI
+    Mereni probehlo na zatezovacim stroji v laboratorich FS CVUT v Praze v Dejvicich.
+    Jednalo se o ctyr bodovy ohyb.
+
+********************
+*** [B] Software ***
+********************
+
+1. Program "Stress Measurement Viewer" verze 1.0 je napsan v jazyce Python 3.11
+   Knihovny:
+   - numpy
+   - Matplotlib
+   - PyQT
+   Jak spustit
+   v prikazovem radku python3 app.py
+
+2. GRAFY
+    *** Zavislost deformace na poloze ***
+    -> osa x: vzdalenost mericiho bodu v optickem vlakne od merici centraly vysilajici laserovy impuls [metr]
+    -> osa y: deformace [microstrain]
+    -> posuvnik: umoznuje prochazet casovym zaznamem mereni
+
