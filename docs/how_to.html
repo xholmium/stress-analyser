@@ -13,41 +13,71 @@
     </style>
 </head>
 <body>
-    <h1>HowTo Guide</h1>
-    <p>Program Stress Measurement Viewer poskytuje uzivateli jednoduchy graficky nahled namerenych dat ve formatu *.tsv, nalezeni vyznamnych oblasti (pro dalsi analyzu) a orezani nepotrebnych dat.</p>
+    <h1>HowTo</h1>
+    <p>Program Stress Measurement Viewer poskytuje uzivateli jednoduchy graficky nahled namerenych dat, ktera jsou ve formatu *.tsv. Program umoznuje nalezeni vyznamnych oblasti (pro dalsi analyzu) a orezani nepotrebnych dat.</p>
 
-    <h2>Otevreni souboru: </h2>
-    <p> <u>File -> Open</u> Nacte *.tsv soubor, ketry obsahuje data z mereni deformace desky</p>
+    <h2>1. NACTENI DATOVEHO SOUBORU</h2>
+    <p> <u>File -> Open</u> Nacte *.tsv soubor, obsahujici data z mereni.</p>
 
-    <h2>Grafy</h2>
-    <p>Pro graficky nahled namerenych dat lze pouzit :</p>
+    <h2>2. GRAFY</h2>
+    <p>Pro graficky nahled namerenych dat lze pouzit graf zavislosti deformace na poloze.</p>
     <ul>
-        <li><strong>Zavislost deformace na poloze</strong></li>
+        <li>Osa x reprezentuje vzdalenost mericiho bodu senzorickeho vlakna od centraly.</li>
+        <li>Osa y reprezentuje velikost namerene deformace v jednotkach microstrain</li>
+        <li>Pomoci casoveho posuvniku v dolni oblasti grafu je mozne prochazet casove zaznamy mereni</li>
+        <img src="./img/full_data_p.png" alt="Cely soubor dat" width="900" height="600">
+        <img src="./img/full_data.png" alt="Cely soubor dat" width="900" height="600">
     </ul>
 
-    <img src="full_data.png" alt="Cely soubor dat" width="900" height="600">
+    <h2>3. VYBER OBLASTI</h2>
+    V prvnim kroku vyhodnoceni dat je potreba vybrat oblasti ve kterych probihala deformace. Predpokladame 3 peaky (sensoricke vlakno bylo nalepeno na vzorek ve trech smyckach). Oblasti mimo zajem je vhodne oriznout.
+    Nalezeni oblasti s peaky muze byt provedeno manualne nebo automatizovane.
 
-    <h2>Vyber dat automatizovane</h2>
-    <u>Edit -> Data Area</u> otevre dialogove okno, ktere umoznuje vybrat cilovou oblast dat, ktera budou v budoucnu podrobena dalsi analyze a orezani nepotrebnych dat.
 
-    <img src="data_selector.png" alt="Data Selector">
+    <h3>3.1 Manualni vyber dat</h3>
+    <p>Z grafu je potreba odecit pocatecni a koncovy bod oblati zajmu. Po kliknuti na bod grafu se zobrazi anotace s udaji o datovem bode. Pro vyber oblasti nas nejvice zajima polozka index.</p>
+    <img src="./img/data_select_annotation.png" alt="Cely soubor dat" width="900" height="600">
 
-    <strong>Zmackni tlacitko "Find time"</strong>
-    <img src="time_mean_average.png" alt="Data Selector">
+    <u>Edit -> Data Area</u> otevre dialogove okno, ktere umoznuje vybrat cilovou oblast dat.
+    <ul>
+        <li>start point: pocatecni bod zajmove oblasti, zadavame index bodu.</li>
+        <li>end point: koncovy bod zajmove oblasti, zadavame index bodu.</li>
+        <li>tlacitko "Select" Data Area" Po stisknuti tlacitka jsou data orezana a ponechana oblast zacinajici indexem "start point" a koncici "end point"</li>
+    </ul>
 
-     <strong>Zmackni tlacitko "Find Peak Area" </strong>
-    <img src="find_peak_area.png" alt="Data Selector">
+    <img src="./img/data_selector.png" alt="Data Selector">
 
-     <strong>Zmackni tlacitko "Select Data Area" </strong>
-    <img src="new_data_set.png" alt="Data Selector">
+    <strong>"Select Data Area" </strong>
+    <p>Po stisknuti tlacitka "Select Data Area" je do prikazoveho radku vytistena informace kolik datovych bodu obsahuje novy soubor dat.</p>
+    <img src="./img/new_data_set.png" alt="Data Selector">
 
-    <h2>Vyber dat manualne z grafu</h2>
-    <img src="data_select_annotation.png" alt="Cely soubor dat" width="900" height="600">
+    <h2>3.2 Automatizovany vyber dat</h2>
+    <p>Smyslem automatizovaneho vyberu dat je poskytnout uzivateli rychly odhad oblasti, na kterou se ma zacilit pri hledani peaku.</p>
+    <img src="./img/data_selector_aut.png" alt="Data Selector">
 
-    <h2>Cilova oblast dat</h2>
-    <img src="data_focused.png" alt="Cely soubor dat" width="900" height="600">
+    <strong>"Find time"</strong>
+    <p>Po stisknuti tlacitka "Find time" je do prikazoveho radku vytisten navrh tri casovych oblasti [jednotka je 0,1 s], ve kterych je vhodne hledat oblast s peaky.
+        Casovy udaj je pocitan jako absolutni hodnota aritmetickeho prumeru vsech hodnot deformace v jednom case mereni. Vybereme jednu hodnotku a zadame do spinboxu "Find time"</p>
+    <img src="./img/time_mean_average.png" alt="Data Selector">
 
-    <h2>About</h2>
+     <strong>"Find Peak Area" </strong>
+    <p>Po stisknuti tlacitka "Find Peak Area" je do prikazoveho radku vytisten navrh pocatnecniho a koncoveho bodu oblasti s peaky. Indexy zadame do spinboxu "Start point" a "End Point"
+    <img src="./img/find_peak_area.png" alt="Data Selector">
+
+    Kriteria podle kterych se vyhledava oblast s peaky.
+        <ul>
+            <li>Baseline - absolutni hodnota deformace kazdeho bodu musi byt vesti nez "Baseline".</li>
+            <li>Min Delta - rozdil absolutni hodnoty deformace dvou sousednich bodu musi byt vesti nez "Min Delta"</li>
+            <li>Max Delta - rozdil absolutni hodnoty deformace dvou sousednich bodu musi byt mensi nez "Max Delta"</li>
+        </ul>
+
+    Nasleduje stisknuti tlacitka <strong>"Select Data Area" </strong> viz odstavec 3.1
+
+    <h2>4. Cilova oblast dat</h2>
+    <p>Ve vybrane oblasti dat muzeme provadet dalsi analyzu...</p>
+    <img src="./img/data_focused.png" alt="Cely soubor dat" width="900" height="600">
+
+    <h2>5. About</h2>
     <p>Click on <strong>Help > About</strong> verze aplikace, autor.</p>
 </body>
 </html>
